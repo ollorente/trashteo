@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_10_213331) do
+ActiveRecord::Schema.define(version: 2018_10_20_011426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,18 @@ ActiveRecord::Schema.define(version: 2018_10_10_213331) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["state_id"], name: "index_cities_on_state_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "product_id"
+    t.text "comment", null: false
+    t.boolean "active", default: true
+    t.boolean "lock", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_comments_on_product_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "countries", force: :cascade do |t|
@@ -163,6 +175,8 @@ ActiveRecord::Schema.define(version: 2018_10_10_213331) do
   end
 
   add_foreign_key "cities", "states"
+  add_foreign_key "comments", "products"
+  add_foreign_key "comments", "users"
   add_foreign_key "offers", "products"
   add_foreign_key "offers", "users"
   add_foreign_key "photos", "products"
