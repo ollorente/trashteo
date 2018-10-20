@@ -1,4 +1,5 @@
 class MeasurementUnitsController < ApplicationController
+  before_action :authenticate_user
   before_action :set_measurement_unit, only: [:show, :update, :destroy]
 
   # GET /measurement_units
